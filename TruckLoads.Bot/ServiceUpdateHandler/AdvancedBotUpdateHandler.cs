@@ -66,7 +66,6 @@ namespace TruckLoads.Bot.ServiceUpdateHandler
 
             var content = new StringContent(json, Encoding.UTF8, "application/json");
 
-            // Use Semaphore to limit concurrent requests
             await SendRequestAsync(content, cancellationToken);
         }
 
@@ -79,7 +78,6 @@ namespace TruckLoads.Bot.ServiceUpdateHandler
 
             var content = new StringContent($"{{\"chat_id\": \"{chatId}\", \"text\": \"{helpMessage}\"}}", Encoding.UTF8, "application/json");
 
-            // Use Semaphore to limit concurrent requests
             await SendRequestAsync(content, cancellationToken);
         }
 

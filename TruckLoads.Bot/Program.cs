@@ -14,6 +14,7 @@ namespace TelegramBotExample
     {
         static async Task Main(string[] args)
         {
+            string token=StaticData.botToken;
             var botClient = new TelegramBotClient(StaticData.botToken);
 
 
