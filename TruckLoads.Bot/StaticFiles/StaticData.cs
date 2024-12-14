@@ -1,17 +1,30 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.Extensions.Configuration;
+using System;
+using System.IO;
 
 namespace TruckLoads.Bot.StaticFiles
 {
     public static class StaticData
     {
-        internal static string botToken = "7741716796:AAF9N4BJPXFb27Ud6YRVjKKZeZIe1Jv6JbY";
+        private static readonly IConfiguration _configuration;
 
-        public static string url = $"https://api.telegram.org/bot{botToken}/sendMessage";
+        static StaticData()
+        {
+            _configuration = new ConfigurationBuilder()
+                .SetBasePath(AppDomain.CurrentDomain.BaseDirectory) // Ishchi katalogni sozlash
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true) // JSON faylni yuklash
+                .Build();
 
-        public static string Base_Url = $"https://localhost:7206";
+
+            botToken = _configuration["BotSettings:Token"] ?? "DefaultToken";
+            url = $"https://api.telegram.org/bot{botToken}/sendMessage";
+            Base_Url = "https://localhost:7206";
+        }
+
+        public static string botToken { get; private set; }
+
+        public static string url { get; private set; }
+
+        public static string Base_Url { get; private set; }
     }
 }
